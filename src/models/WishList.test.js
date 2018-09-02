@@ -11,6 +11,20 @@ it("can create an instance of a model", () => {
   expect(item.image).toBe("");
 });
 
+it("can create an item", () => {
+  const wishlist = WishList.create({
+    items: [data]
+  });
+
+  wishlist.addItem({
+    name: "O Alquimista",
+    price: 21.0
+  });
+
+  expect(wishlist.items.length).toBe(2);
+  expect(wishlist.items[1].name).toBe("O Alquimista");
+});
+
 it("can change item data", () => {
   const item = WishListItem.create(data);
 
