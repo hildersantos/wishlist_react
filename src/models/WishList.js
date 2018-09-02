@@ -6,12 +6,17 @@ export const WishListItem = types
     price: types.number,
     image: ""
   })
-  .actions(self => {
-    function changeName(newName) {
+  .actions(self => ({
+    changeName(newName) {
       return (self.name = newName);
+    },
+    changePrice(newPrice) {
+      return (self.price = newPrice);
+    },
+    changeImage(newImage) {
+      return (self.image = newImage);
     }
-    return { changeName };
-  });
+  }));
 
 export const WishList = types.model({
   items: types.optional(types.array(WishListItem), [])
