@@ -5,3 +5,7 @@ export const WishListItem = types.model({
   price: types.number,
   image: ""
 });
+
+export const WishList = types.model({
+  items: types.optional(types.array(WishListItem), [])
+});
