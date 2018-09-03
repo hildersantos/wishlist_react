@@ -17,7 +17,7 @@ export const WishListItem = types
       return (self.image = newImage);
     },
     remove() {
-      getParent(self, 2).remove(self);
+      getParent(self, 2).remove(self); // Pego o pai do pai do item. No caso, wishList. wishList -> items -> item
     }
   }));
 
