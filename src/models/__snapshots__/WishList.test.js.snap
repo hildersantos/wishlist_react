@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can create an item - 2 1`] = `
+Array [
+  Object {
+    "op": "add",
+    "path": "/items/0",
+    "value": Object {
+      "image": "",
+      "name": "O Alquimista",
+      "price": 21,
+    },
+  },
+  Object {
+    "op": "replace",
+    "path": "/items/0/name",
+    "value": "Diario de um Mago",
+  },
+]
+`;
+
+exports[`can create an item 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "image": "",
+      "name": "Diario de um Mago",
+      "price": 21,
+    },
+  ],
+}
+`;
+
+exports[`can create an item 2`] = `
+Array [
+  Object {
+    "items": Array [
+      Object {
+        "image": "",
+        "name": "O Alquimista",
+        "price": 21,
+      },
+    ],
+  },
+  Object {
+    "items": Array [
+      Object {
+        "image": "",
+        "name": "Diario de um Mago",
+        "price": 21,
+      },
+    ],
+  },
+]
+`;
