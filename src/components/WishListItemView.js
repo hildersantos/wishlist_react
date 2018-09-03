@@ -14,7 +14,7 @@ class WishListItemView extends Component {
       this.renderEditable()
     ) : (
       <li className="item">
-        {item.image && <img src={item.image} />}
+        {item.image && <img src={item.image} alt={item.name} />}
         <h3>{item.name}</h3>
         <span>{item.price}</span>
         <span>

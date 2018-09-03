@@ -22,7 +22,7 @@ class WishListItemEdit extends Component {
     this.props.item.changeName(event.currentTarget.value);
   };
   onPriceChange = event => {
-    const price = parseInt(event.currentTarget.value);
+    const price = parseInt(event.currentTarget.value, 10);
     if (!isNaN(price)) this.props.item.changePrice(price);
   };
   onImageChange = event => {
