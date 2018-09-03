@@ -7,7 +7,7 @@ import { onSnapshot } from "mobx-state-tree";
 
 import { WishList } from "./models/WishList";
 
-const initialState = {
+let initialState = {
   items: [
     {
       name: "Lego Mindstorms EV3",
