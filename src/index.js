@@ -5,27 +5,32 @@ import App from "./components/App";
 
 import { getSnapshot } from "mobx-state-tree";
 
-import { WishList } from "./models/WishList";
+import { Group } from "./models/Group";
 
 let initialState = {
-  items: [
-    {
-      name: "Lego Mindstorms EV3",
-      price: 349.95,
-      image: "https://via.placeholder.com/300x350?text=Lego"
+  users: {
+    a124: {
+      id: "a124",
+      name: "Homer",
+      gender: "m"
     },
-    {
-      name: "Miracles - C.S. Lewis",
-      price: 12.91,
-      image: "https://via.placeholder.com/300x350?text=Miracles"
+    h395: {
+      id: "h395",
+      name: "Hilder",
+      gender: "m"
+    },
+    r975: {
+      id: "r975",
+      name: "Rafaela",
+      gender: "f"
     }
-  ]
+  }
 };
 
-let wishList = WishList.create(initialState);
+let group = Group.create(initialState);
 
 function renderApp() {
-  ReactDOM.render(<App wishList={wishList} />, document.getElementById("root"));
+  ReactDOM.render(<App group={group} />, document.getElementById("root"));
 }
 
 renderApp();
@@ -35,10 +40,10 @@ if (module.hot) {
     // se novos componentes forem adicionados, faço um renderApp
     renderApp();
   });
-  module.hot.accept(["./models/WishList"], () => {
+  module.hot.accept(["./models/Group"], () => {
     // se novos modelos forem criados/definidos
-    const snapshot = getSnapshot(wishList); // crio um snapshot da instância wishList atual
-    wishList = WishList.create(snapshot); // crio uma nova wishlist baseada no snapshot tirado
+    const snapshot = getSnapshot(group); // crio um snapshot da instância wishList atual
+    group = Group.create(snapshot); // crio uma nova wishlist baseada no snapshot tirado
     renderApp();
   });
 }
