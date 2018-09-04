@@ -37,7 +37,6 @@ class App extends Component {
     });
   };
 }
-
 const User = observer(({ user }) => (
   <div>
     <WishListView wishList={user.wishList} />
@@ -50,4 +49,4 @@ const User = observer(({ user }) => (
   </div>
 ));
 
-export default App;
+export default observer(App);
