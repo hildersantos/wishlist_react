@@ -1,4 +1,10 @@
-import { types, flow, applySnapshot } from "mobx-state-tree";
+import {
+  types,
+  flow,
+  applySnapshot,
+  getSnapshot,
+  onSnapshot
+} from "mobx-state-tree";
 import { WishList } from "./WishList";
 import { values } from "mobx";
 
@@ -11,6 +17,9 @@ const User = types
     recipient: types.maybe(types.reference(types.late(() => User)))
   })
   .actions(self => ({
+    afterCreate: () => {
+      onSnapshot(self, self.save);
+    },
     getSuggestions: flow(function*() {
       const response = yield window.fetch(
         `http://localhost:3001/suggestions_${self.gender}`
@@ -18,6 +27,18 @@ const User = types
 
       const suggestions = yield response.json();
       self.wishList.items.push(...suggestions);
+    }),
+    save: flow(function* save() {
+      try {
+        yield window.fetch(`http://localhost:3001/users/${self.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(getSnapshot(self))
+        });
+        console.log("Saved");
+      } catch (e) {
+        console.log("Ooops... an error ocurred.", e);
+      }
     })
   }));
 
