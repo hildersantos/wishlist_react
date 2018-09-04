@@ -1,31 +1,28 @@
 import { types, flow, applySnapshot } from "mobx-state-tree";
 import { WishList } from "./WishList";
 import { values } from "mobx";
-import { Storable } from "./Storable";
-
-const UserBase = types.model({
-  id: types.identifier,
-  name: types.string,
-  gender: types.enumeration("gender", ["m", "f"]),
-  wishList: types.optional(WishList, {}),
-  recipient: types.maybe(types.reference(types.late(() => User)))
-});
-
-const UserActions = types.model({}).actions(self => ({
-  getSuggestions: flow(function*() {
-    const response = yield window.fetch(
-      `http://localhost:3001/suggestions_${self.gender}`
-    );
-
-    const suggestions = yield response.json();
-    self.wishList.items.push(...suggestions);
-  }),
-  Storable
-}));
+import { createStorable } from "./Storable";
 
 const User = types.compose(
-  UserBase,
-  UserActions
+  types
+    .model({
+      id: types.identifier,
+      name: types.string,
+      gender: types.enumeration("gender", ["m", "f"]),
+      wishList: types.optional(WishList, {}),
+      recipient: types.maybe(types.reference(types.late(() => User)))
+    })
+    .actions(self => ({
+      getSuggestions: flow(function*() {
+        const response = yield window.fetch(
+          `http://localhost:3001/suggestions_${self.gender}`
+        );
+
+        const suggestions = yield response.json();
+        self.wishList.items.push(...suggestions);
+      })
+    })),
+  createStorable("users", "id")
 );
 
 export const Group = types
