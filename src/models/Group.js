@@ -1,12 +1,7 @@
-import {
-  types,
-  flow,
-  applySnapshot,
-  getSnapshot,
-  onSnapshot
-} from "mobx-state-tree";
+import { types, flow, applySnapshot } from "mobx-state-tree";
 import { WishList } from "./WishList";
 import { values } from "mobx";
+import { Storable } from "./Storable";
 
 const UserBase = types.model({
   id: types.identifier,
@@ -17,9 +12,6 @@ const UserBase = types.model({
 });
 
 const UserActions = types.model({}).actions(self => ({
-  afterCreate: () => {
-    onSnapshot(self, self.save);
-  },
   getSuggestions: flow(function*() {
     const response = yield window.fetch(
       `http://localhost:3001/suggestions_${self.gender}`
@@ -28,18 +20,7 @@ const UserActions = types.model({}).actions(self => ({
     const suggestions = yield response.json();
     self.wishList.items.push(...suggestions);
   }),
-  save: flow(function* save() {
-    try {
-      yield window.fetch(`http://localhost:3001/users/${self.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(getSnapshot(self))
-      });
-      console.log("Saved");
-    } catch (e) {
-      console.log("Ooops... an error ocurred.", e);
-    }
-  })
+  Storable
 }));
 
 const User = types.compose(
